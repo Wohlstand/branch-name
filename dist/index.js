@@ -119,7 +119,12 @@ const core = __webpack_require__(470);
 
 async function run() {
   try {
-    core.exportVariable('BRANCH_NAME', process.env.GITHUB_REF.split('/').slice(2).join('/'));
+    // pull request
+    if(process.env.GITHUB_HEAD_REF)
+        core.exportVariable('BRANCH_NAME', process.env.GITHUB_HEAD_REF);
+    // normal push
+    else
+        core.exportVariable('BRANCH_NAME', process.env.GITHUB_REF.split('/').slice(2).join('/'));
   }
   catch (error) {
     core.setFailed(error.message);
