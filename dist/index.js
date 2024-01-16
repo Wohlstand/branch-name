@@ -121,10 +121,16 @@ async function run() {
   try {
     // pull request
     if(process.env.GITHUB_HEAD_REF)
+    {
         core.exportVariable('BRANCH_NAME', process.env.GITHUB_HEAD_REF);
+        console.log("Got branch name \"" + process.env.GITHUB_HEAD_REF + "\" for pull request.");
+    }
     // normal push
     else
+    {
         core.exportVariable('BRANCH_NAME', process.env.GITHUB_REF.split('/').slice(2).join('/'));
+        console.log("Got branch name \"" + process.env.GITHUB_REF.split('/').slice(2).join('/') + "\" for normal push.");
+    }
   }
   catch (error) {
     core.setFailed(error.message);
